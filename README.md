@@ -81,7 +81,7 @@ Esto habrá creado una solicitud de volumen, luego de unos minutos se debería c
 
 ```
 sshpass -p <password> ssh -o StrictHostKeyChecking=no root@<ip-public>
-
+```
 Donde el password y la ip pública 
 
 4. 
