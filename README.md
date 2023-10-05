@@ -64,24 +64,29 @@ Luego debe seleccionar la cuenta en la que desea crear la máquinas, ingrese el 
 
     Tenga en consideración que este comando pedirá confirmación ya que generará la facturación por el uso del servicio. si quiere que al ejecutar no pida esta confirmación agregue al final de la linea del comando ``` -f ``` 
 
-5. Se necesita crear 3 servers para los worker nodes, (3 para los control plane y 3 para el ODF) para este ejercicio. descargue el archivo CrearServers o clone todo el repositorio en su máquina virtual, allí abra el archivo y modifique el 
+5. Se necesita crear 5 servers para los worker nodes y los worker nodes, realice el paso anterior 5 veces más con los nombre  ```host02-openshift```, ```host03-openshift```, ```control-plane-virtual-server-1```, ```control-plane-virtual-server-2``` y ```control-plane-virtual-server-3```. estos útlimos 3 con un solo disco de 300GB 
    
 
 ### Creación y configuración de Block Storage en IBM Cloud
 
+1.  Hay varias formas para crear los block storage en ibm cloud, en esta guía, se creará desde la vista de ibmcloud. dirijase al siguiente [link](https://cloud.ibm.com/cloud-storage/block/order) 
 
+Enesta vista solicite el storage de tipo block que usted necesite, para este ejemplo puede solicitar un block storgae de tipo Endurance de 4IOPS/GB, con un tamaño de 200GB, con 0GB de snapshot, con sistema operativo LINUX y en la región US SOUTH Dallas, dal13. Acepte los términos y condiciones y haga clic en aceptar.
 
-### Creación de File Storage en IBM Cloud
+Esto habrá creado una solicitud de volumen, luego de unos minutos se debería crear su volumen. 
 
+2. Para la configuración del block storage, el primer paso es asignarle el storage a la máquina virtual determinada. para esto vaya a la vista de detalle del block storage recién creado. luego haga click en ```Actions``` y luego en ```Authorize host```, seleccione virtual server en el tipo de dispositivo y seleccione el host que quiera asignarle el storage, en este caso  ```host01-openshift```.
 
+3. Ahora es necesario realizar una configuración en el virtual server, para ello debe acceder de manera remoto, para ello, desde su máquina linux, ejecute el siguiente comando (si no el comando sshpass ejecute ```sudo spt install sshpass```).
 
-### Configuración de File Storage en IBM Cloud
+```
+sshpass -p <password> ssh -o StrictHostKeyChecking=no root@<ip-public>
 
+Donde el password y la ip pública 
 
+4. 
 
-
-
-<img width="800" alt="" src="img/1cluster.png"> 
+### Creación y configuración de File Storage en IBM Cloud
 
 
 
