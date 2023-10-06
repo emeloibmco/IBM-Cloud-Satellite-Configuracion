@@ -171,12 +171,16 @@ Ahora copie en el lo siguiente;
 ```
 InitiatorName=<value-from-the-Portal>
 ```
-
-Donde ```<value-from-the-Portal>``` para obtener el IQN, la ip target, username y password, necesarios para vincular el block storage y el virtual server puede ejecutar el siguietne comando
+Para obtener el IQN, la ip target, username y password, necesarios para vincular el block storage y el virtual server puede ejecutar el siguietne comando no el terminal del virtual server si no de su máquina lonux
 ```
 ibmcloud sl vs storage <id>
 ```
-con este obtendrá el IQN, el username y el password, El IQN será el que coloca en vez de ```<value-from-the-Portal>```
+Con este obtendrá el IQN, el username y el password, El IQN será el que coloca en vez de ```<value-from-the-Portal>```. Para obtner la ip target debe ejecutar el sieguiente comando
+```
+ibmcloud sl block volume-list
+```
+el resultado debe ser una lusta de los diferentes block storage que usted hay creado o solicitado, en la columna 8 debe estar el ip_addr, este es el target IP que necesitaremos para pasos posteriores.
+
 
 
 4. 
