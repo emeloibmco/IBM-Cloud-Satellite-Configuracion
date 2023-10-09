@@ -102,9 +102,31 @@ There were 2259 failed login attempts since the last successful login.
 Last login: Tue Oct  3 10:08:25 2023 from 129.41.86.4
 [root@host01-openshift ~]#
 ```
+Si no ve esta linea y ve algo similar a los siqguiente, deberá borrar las claves ssh que se guardaron automáticamnete en su máquina virtual por realizar conexiones ssh previas a otros dispositivos. 
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:Xxxxxxxxxxxxxxxxxxxxxxxxxxx.
+Please contact your system administrator.
+Add correct host key in /home/sebastian/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /home/sebastian/.ssh/known_hosts:3
+  remove with:
+  ssh-keygen -f "/home/sebastian/.ssh/known_hosts" -R "169.59.2.86"
+Password authentication is disabled to avoid man-in-the-middle attacks.
+Keyboard-interactive authentication is disabled to avoid man-in-the-middle attacks.
+UpdateHostkeys is disabled because the host key is not trusted.
+root@169.59.2.86: Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).
+```
+Ejecute el comando : ```cd ~/.ssh```, esto lo dirijirá a la carpeta donde se encuentran todas las claves ssh que tiene su sistema, ejecute ```rm *``` para borrarlas todas las claves que tenga guardadas. Vuelta a ejecutra el comando de sshpass para conectarse con el servidor, recuerde salir de la carpeta ~/.ssh.
+
 En esta nueva linea de comando ejecutaremos los siguientes códigos. 
 
-ejecute este comando para descargar los paquetes necearios para realizar la configuración 
+Ejecute este comando para descargar los paquetes necearios para realizar la configuración 
 ```
 sudo dnf -y install iscsi-initiator-utils device-mapper-multipath
 ```
