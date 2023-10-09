@@ -179,10 +179,43 @@ Con este obtendrá el IQN, el username y el password, El IQN será el que coloca
 ```
 ibmcloud sl block volume-list
 ```
-el resultado debe ser una lusta de los diferentes block storage que usted hay creado o solicitado, en la columna 8 debe estar el ip_addr, este es el target IP que necesitaremos para pasos posteriores.
+el resultado debe ser una lista de los diferentes block storage que usted haya creado o solicitado, en la columna 8 debe estar el ip_addr, este es el target IP que necesitaremos para pasos posteriores.
+Ahora deberá cambiar la configuración de las credenciales. Ejecute el siguiente comando para editar el archivo de configuración de credenciales.
+```
+vi /etc/iscsi/iscsid.conf
+```
+Ahora busque, descomente y complete la información con el usuario y contraseña que obtuvo anteriormente de las siguiente lineas.
+```
+node.session.auth.authmethod = CHAP
+node.session.auth.username = <Username-value-from-Portal>
+node.session.auth.password = <Password-value-from-Portal>
+discovery.sendtargets.auth.authmethod = CHAP
+discovery.sendtargets.auth.username = <Username-value-from-Portal>
+discovery.sendtargets.auth.password = <Password-value-from-Portal>
+```
+El siguiente paso es indicarle al servido la ip target a la cual se tiene que conectar con el block storage. Ejecute el siguiente comando:
+```
+iscsiadm -m discovery -t sendtargets -p <ip-target>
+```
+Luego deberá loguearse en el arreglo ISCSI, ejecute el siguiente comando:
+```
+iscsiadm -m node --login
+```
 
+Puede validar que la sesion ISCSI está establecida
+```
+iscsiadm -m session -o show
+```
+También verifique que existe el multipath 
+```
+multipath -l
+```
 
-
+por último puede verificar la creación del disco 
+```
+fdisk -l | grep /dev/mapper
+```
+De manera predeterminada, el disco se crea en el path ```/dev/mapper```. Acá o ejecutando el comando ```lsblk``` verá que el disco que añadió tiene una partición creada y para que el operador de block storage en el cluster de openshift, identifique qel disco, este debe estar "unmounted" y "unformatted", el primer requisito lo cumplimos, ya que al ejecutar el "lsblk" veremos que el path del mount point está vacio, esto significa que no está montado en ningún path. Pero la segunda condición iniclamente no la cumplimos, ya que si 
 4. 
 
 ### Creación y configuración de File Storage en IBM Cloud
