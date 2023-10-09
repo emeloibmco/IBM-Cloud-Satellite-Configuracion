@@ -215,7 +215,31 @@ por último puede verificar la creación del disco
 ```
 fdisk -l | grep /dev/mapper
 ```
-De manera predeterminada, el disco se crea en el path ```/dev/mapper```. Acá o ejecutando el comando ```lsblk``` verá que el disco que añadió tiene una partición creada y para que el operador de block storage en el cluster de openshift, identifique qel disco, este debe estar "unmounted" y "unformatted", el primer requisito lo cumplimos, ya que al ejecutar el "lsblk" veremos que el path del mount point está vacio, esto significa que no está montado en ningún path. Pero la segunda condición iniclamente no la cumplimos, ya que si 
+De manera predeterminada, el disco se crea en el path ```/dev/mapper```. Acá o ejecutando el comando ```lsblk``` verá que el disco que añadió tiene una partición creada y para que el operador de block storage en el cluster de openshift, identifique qel disco, este debe estar "unmounted" y "unformatted", el primer requisito lo cumplimos, ya que al ejecutar el "lsblk" veremos que el path del mount point está vacio, esto significa que no está montado en ningún path. Para verificar que nuestro disco tampoco tiene algún formato o partición, puede ejecutar el comando ```sudo fdisk /dev/mapper/3600xxxxxxxxxxxxx``` donde el "3600xxxxxxxxxxxxx es el número que verá al lado de ```/dev/mapper``` al ejecutar el comando ```fdisk -l | grep /dev/mapper```. Se habría una linea de comandos exclusiva para realizar acciones de consulta sobre el disko que añadimos, digite ```p``` y oprima enter, verá infromación del disño y sus particiones, si aparece una información similar a la siguiente, significa que el disco no tiene particiones
+```
+Disk /dev/mapper/3600xxxxxxxxxxxxxxxxx: 200 GiB, 214748364800 bytes, 419430400 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 65536 bytes
+Disklabel type: gpt
+Disk identifier: XXXX-XXXX-XXXXXX-XXX
+```
+
+Si le aparece un información como la siguiente, significará que si tiene particiones:
+```
+Disk /dev/xvda: 100 GiB, 107374632960 bytes, 209716080 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xxxxx
+
+Device     Boot   Start       End   Sectors Size Id Type
+/dev/xvda1 *       2048   2099199   2097152   1G 83 Linux
+/dev/xvda2      2099200 209715199 207616000  99G 83 Linux
+```
+
+
 4. 
 
 ### Creación y configuración de File Storage en IBM Cloud
