@@ -260,7 +260,7 @@ Device     Boot   Start       End   Sectors Size Id Type
 /dev/xvda1 *       2048   2099199   2097152   1G 83 Linux
 /dev/xvda2      2099200 209715199 207616000  99G 83 Linux
 ```
-
+Después de haber creado y configurado los block storages en todos los virtual servers, solo debe aagregarlo a los virtual server que tengan la función de worker node en el cluster se debe crear el satellite location y agregarle los virtual server
 
 4. 
 
