@@ -6,7 +6,7 @@ En esta guía se presenta un paso a paso para crear una location de IBM Cloud Sa
 1. [Pre-Requisitos](#pre-requisitos-pencil)
     1. [Creación de máquinas virtuales en IBM Cloud](#creación-de-máquinas-virtuales-en-ibm-cloud)
 2. [Creación de Satellite Location]()
-3. [Configurar y attachar máquinas a la Satellite Location]()
+3. [Configurar y attachar máquinas a la ubicación de Satellite]()
 4. [Despliegue de un clúster de Openshift]()
 5. [Configuración de Block Storage en la Satellite Location]()
 6. [Configuración de File Storage en la Satellite Location]()
@@ -79,6 +79,22 @@ Luego debe seleccionar la cuenta en la que desea crear la máquinas, ingrese el 
     ```
 
 ### Creación de un Satellite Location.
+Para la creación de una ubicación de satellite corra este comando en su máquina virtual:
+
+```
+ibmcloud sat location create --managed-from dal13 --name $location -q
+```
+Esto creará una ubicación en dallas 13, con el nombre de la variale $location, aquí puede colocar el nombre que desee de la ubicación. Tenga en cuenta que el nombre debe empezar una letra, puede contener letras, números, puntos o guiones, los demás caracteres no se aceptan. 
+
+El despliegue o creación de este servicio se suele demorar 5 minutos, para vereficar que el servicio se creó correctamente, ejecute el siguiente comnado.
+```
+ibmcloud sat location get --location $location --json 
+```
+Este comando retornará un archivo json, busque el atributo ```deployments.message``` si el mensaje que retoran es un código diferente a ```R0012``` , el ambiente aún no está listo. Este mensaje ```R0012``` indica que la ubicación necesita que se añadan y configuren las máquinas que tengan el rol de control plane. Si desea entender los demás posibles errores que se le presenten en el despliegue en cualquier paso relacionado a la ubicación, puede ver la siguiente [documentación](https://cloud.ibm.com/docs/satellite?topic=satellite-ts-locations-debug)
+
+
+### Configurar y attachar máquinas a la ubicación de Satellite
+
 
 ### Referencias :page_facing_up:
 - [Local Storage Operator - Block](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-block&interface=ui)
