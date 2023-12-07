@@ -87,13 +87,22 @@ ibmcloud sat location create --managed-from dal13 --name $location -q
 Esto creará una ubicación en dallas 13, con el nombre de la variale $location, aquí puede colocar el nombre que desee de la ubicación. Tenga en cuenta que el nombre debe empezar una letra, puede contener letras, números, puntos o guiones, los demás caracteres no se aceptan. 
 
 El despliegue o creación de este servicio se suele demorar 5 minutos, para vereficar que el servicio se creó correctamente, ejecute el siguiente comnado.
+
 ```
 ibmcloud sat location get --location $location --json 
 ```
+
 Este comando retornará un archivo json, busque el atributo ```deployments.message``` si el mensaje que retoran es un código diferente a ```R0012``` , el ambiente aún no está listo. Este mensaje ```R0012``` indica que la ubicación necesita que se añadan y configuren las máquinas que tengan el rol de control plane. Si desea entender los demás posibles errores que se le presenten en el despliegue en cualquier paso relacionado a la ubicación, puede ver la siguiente [documentación](https://cloud.ibm.com/docs/satellite?topic=satellite-ts-locations-debug)
 
 
 ### Configurar y attachar máquinas a la ubicación de Satellite
+Ahora se debe configurar y attachar las máquinas a la ubicación, para ello, es necesario descargar un script que genera la ubicación para agreagar máquinas, para descargar este script ejecute el siguiente comando:
+
+```
+ibmcloud sat host attach --location $location 
+```
+
+Esto descargará un archivo en la carpeta tmp de la máquina virtual con el nombre register-host_(nombre de su ubicación)-xxxxxxx, este archivo lo debe subir o agregar a cada una de las máquinas que desea attachar a la ubicación. Para ello los siguientes pasos.
 
 
 ### Referencias :page_facing_up:
