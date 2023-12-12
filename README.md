@@ -184,7 +184,7 @@ ibmcloud oc cluster create satellite --location $location --name $nombreOpenshif
 Los parámetros cmabiarán si desea instalar otra versión de OP o las máquinas tienen otro sistema operativo. Luego de su creación podrá ver el estado del cluster desde ibm cloud, luego de que el cluster esté desplegado correctamente deberá ver lo siguiente:
 <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/0a365411-2d83-4680-b36a-62b609f55459" width="1000" >
 
-Aquí podráingresar al cluster con el botón azul 
+Aquí podrá ingresar al cluster con el botón azul 
 ### Referencias :page_facing_up:
 - [Local Storage Operator - Block](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-block&interface=ui)
 - [Local Storage Operator - File](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-file&interface=ui)
