@@ -8,9 +8,8 @@ En esta guía se presenta un paso a paso para crear una location de IBM Cloud Sa
 2. [Creación de Satellite Location]()
 3. [Configurar y attachar máquinas a la ubicación de Satellite]()
 4. [Despliegue de un clúster de Openshift]()
-5. [Configuración de Block Storage en la Satellite Location]()
-6. [Configuración de File Storage en la Satellite Location]()
-7. [Agregar Storage a una máquina cuando ya se tiene un clúster creado]()
+5. [Configuración de Local Storage en la Satellite Location]()
+6. [Configuración de ODF Storage en la Satellite Location]()
 4. [Referencias](#referencias-📄)
 4. [Autores](#autores-black_nib)
 
