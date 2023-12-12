@@ -112,6 +112,14 @@ ibmcloud sat host attach --location $location
 
 Esto descargará un archivo en la carpeta tmp de la máquina virtual con el nombre register-host_(nombre de su ubicación)-xxxxxxx, este archivo lo debe subir o agregar a cada una de las máquinas que desea attachar a la ubicación. Para ello los siguientes pasos.
 
+Para ingresar a las máquinas, es necesario obtener la ip y la contraseña, para ello ejecute los siguientes comandos:
+
+```
+ibmcloud sl vs list
+```
+
+ESto retornará algo similar a lo siguiente:
+
 
 ### Referencias :page_facing_up:
 - [Local Storage Operator - Block](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-block&interface=ui)
