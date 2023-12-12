@@ -104,6 +104,8 @@ Hasta que vea la siguiente imagen:
 
 
 ### Configurar y attachar máquinas a la ubicación de Satellite
+
+Para este paso es necesario que tenga instalado en su máquina el comando ```sshpass```
 Ahora se debe configurar y attachar las máquinas a la ubicación, para ello, es necesario descargar un script que genera la ubicación para agreagar máquinas, para descargar este script ejecute el siguiente comando:
 
 ```
@@ -119,8 +121,70 @@ ibmcloud sl vs list
 ```
 
 ESto retornará algo similar a lo siguiente:
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/f029364f-2b65-402d-8c46-f375c8906c8c" alt="Arquitectura-local-storage" width="1000" >
+
+Para obtener la contraseña ejecute el sieguiente comando:
+
+```
+ibmcloud sl vs credentials $id
+```
+
+Donde el id de cada máquina será el número de la primera carpeta. Esto devolverá una respuesta con la contraseña necesaria para ingresar. Luego es necesario ingresar a la instancia del virtual server.
+
+```
+sshpass -p $pwd  ssh -o StrictHostKeyChecking=no root@$ip
+```
+Donde $pwd es la contraseña que obtuvo anteriormente y $ip es la dirección ip pública del servidor. Al ingresar lo verá lo siguiente
+
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/f3b0806c-f6c2-461a-bd01-ad0519702de3" width="600" >
 
 
+Acá deberá actualizar e instalar varios repositorios de Red Hat, para ello, ejecute los siguientes comandos:
+```
+subscription-manager refresh
+subscription-manager repos --enable rhel-8-for-x86_64-appstream-rpms
+subscription-manager repos --enable rhel-8-for-x86_64-baseos-rpms
+```
+
+Luego salga de la máquina ingresando el comando ```exit```. Al volver a su máquina virtual deberá cargar el script de attach a la máquina. Ejecute el siguiente comando para subir el archivo a la máquina.
+
+```
+sshpass -p $pwd  scp $nombre_script root@$ip:/home
+```
+Dónde $pwd es la contraseña, $ip es la ip pública y $nombre_script es la ruta absoluto y el nombre del script ternimado en .sh. Recuerde que si está ejecutando este comando desde la carpeta donde se encuentra el script no es necesario colocar la ruta completa si no solo el nombre del archivo. 
+
+Este paso deberá realizarlo con todas las máquinas que desee agregar al satellite location. Al final deberá ver algo similar a lo siguiente desde ibm cloud y la ubicación de su satellite.
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/7f5fcdb9-4697-4d5e-8063-34f0d308af20" width="800" >
+
+La diferencia será que ninguna de las máquinas estará asignada a ningún tipo de servicio o infraestructura. Por lo que el paso siguiente será asignar las maquinas que tendrán el rol de control plane:
+
+```
+ibmcloud sat host assign --host $name --location $location --zone us-south-$zone
+```
+donde $name es el nombre de la máquina que desea assiganar como control plane y $zone es un número entre 1 y 3. Como va a asignar 3 máquinas, cada una debe quedar asignada en zonas diferentes. 
+
+Lueego de asignar estas máquinas como control planes, en la vista de ibm cloud podrá ver que ya se encontrarán asignadas pero en estado de aprovisionamiento, espere a que el estado sea ready. También puede ver el estado de las máquinas desde la consola de su maquina virtual:
+
+```
+ibmcloud sat host list --location $name-location
+```
+
+Donde $name-location es el nombre de su ubicación. El siguiente paso será crear un cluster de Openshift.
+
+### Despliegue de un clúster de Openshift
+Lo primero que se debe realizar es etiquetar las máquinas que estarán en Openshift. Si está realizando la configuración de storage local, esta etiqueta se colocará a todas las máuinas restantes. Si esta realizando la configuración de ODF, se hace igual, menos a las maquinas destiandas a ODF.
+```
+ibmcloud sat host update --host $name --host-label $namelabel=$label --location $location
+```
+Para la creación de un cluster de openshift en satellite desde consola puede ejecutar el sisguiente comando
+```
+ibmcloud oc cluster create satellite --location $location --name $nombreOpenshift --version 4.12.37_openshift --workers 3 --operating-system RHEL8 --enable-config-admin --host-label $namelabel=$label 
+```
+
+Los parámetros cmabiarán si desea instalar otra versión de OP o las máquinas tienen otro sistema operativo. Luego de su creación podrá ver el estado del cluster desde ibm cloud, luego de que el cluster esté desplegado correctamente deberá ver lo siguiente:
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/0a365411-2d83-4680-b36a-62b609f55459" width="800" >
+
+Aquí podráingresar al cluster con el botón azul 
 ### Referencias :page_facing_up:
 - [Local Storage Operator - Block](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-block&interface=ui)
 - [Local Storage Operator - File](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-file&interface=ui)
