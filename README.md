@@ -154,7 +154,7 @@ sshpass -p $pwd  scp $nombre_script root@$ip:/home
 Dónde $pwd es la contraseña, $ip es la ip pública y $nombre_script es la ruta absoluto y el nombre del script ternimado en .sh. Recuerde que si está ejecutando este comando desde la carpeta donde se encuentra el script no es necesario colocar la ruta completa si no solo el nombre del archivo. 
 
 Este paso deberá realizarlo con todas las máquinas que desee agregar al satellite location. Al final deberá ver algo similar a lo siguiente desde ibm cloud y la ubicación de su satellite.
-<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/7f5fcdb9-4697-4d5e-8063-34f0d308af20" width="800" >
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/7f5fcdb9-4697-4d5e-8063-34f0d308af20" width="1000" >
 
 La diferencia será que ninguna de las máquinas estará asignada a ningún tipo de servicio o infraestructura. Por lo que el paso siguiente será asignar las maquinas que tendrán el rol de control plane:
 
@@ -182,7 +182,7 @@ ibmcloud oc cluster create satellite --location $location --name $nombreOpenshif
 ```
 
 Los parámetros cmabiarán si desea instalar otra versión de OP o las máquinas tienen otro sistema operativo. Luego de su creación podrá ver el estado del cluster desde ibm cloud, luego de que el cluster esté desplegado correctamente deberá ver lo siguiente:
-<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/0a365411-2d83-4680-b36a-62b609f55459" width="800" >
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/0a365411-2d83-4680-b36a-62b609f55459" width="1000" >
 
 Aquí podráingresar al cluster con el botón azul 
 ### Referencias :page_facing_up:
