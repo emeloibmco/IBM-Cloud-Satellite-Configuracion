@@ -94,6 +94,14 @@ ibmcloud sat location get --location $location --json
 
 Este comando retornará un archivo json, busque el atributo ```deployments.message``` si el mensaje que retoran es un código diferente a ```R0012``` , el ambiente aún no está listo. Este mensaje ```R0012``` indica que la ubicación necesita que se añadan y configuren las máquinas que tengan el rol de control plane. Si desea entender los demás posibles errores que se le presenten en el despliegue en cualquier paso relacionado a la ubicación, puede ver la siguiente [documentación](https://cloud.ibm.com/docs/satellite?topic=satellite-ts-locations-debug)
 
+También puede ver este estado desde la vista de ibm cloud, en la sección de satellite y ubicaciones y seleccionando la ubicación correspondiente. 
+
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/b8270ed9-50e1-491d-b25a-26f7d3c8b4fd" alt="Arquitectura-local-storage" width="600" >
+
+Hasta que vea la siguiente imagen:
+
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/cf0b2493-72f3-4822-809a-b9bfabd5c05d" alt="Arquitectura-local-storage" width="600" >
+
 
 ### Configurar y attachar máquinas a la ubicación de Satellite
 Ahora se debe configurar y attachar las máquinas a la ubicación, para ello, es necesario descargar un script que genera la ubicación para agreagar máquinas, para descargar este script ejecute el siguiente comando:
