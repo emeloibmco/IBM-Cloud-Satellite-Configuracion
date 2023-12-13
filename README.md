@@ -209,7 +209,51 @@ Deberá ver algo similar a lo siguiente:
 
 <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/b2d7ae38-7039-4357-abce-fe900b4316c3" width="1000" >
 
-Ejecute el comando que le sugiere ```chroot /host```. Luegi es necesario identificar los discos que tendrán la característica de block y de file. 
+Ejecute el comando que le sugiere ```chroot /host```. Luego es necesario identificar los discos que tendrán la característica de block y de file. Ejecute el comando  ```lsblk```, verá el siguiente resultado:
+
+ <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/1ff23269-61b3-4bbc-a26a-f58de4173d98" width="400" >
+
+Acá podrá veririficar el tamaño de los discos, para el caso de local storage debe estar disponibles dos discos de 100G( que no tengan Mount point). Guarde el nombre de los discos. Para que la configuración de storage pueda usar estos elementos como persistent volumes es necesario que estos discos estén desmontados (que no tengan ruta de montaje) y que no tengan ningún formato (unformatted). Para verificar estas dos condiciones, ejecute el comando ```lsblk -f``` va obtener un resultado similar al siguiente.
+
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/4333457b-c2cd-4546-9079-c26ae46c68f3" width="800" >
+
+Verifique que los discos que desea usar no tengan niguna información en las demás columnas. Teniendo claro los discos que se usaran se puede pasar a la creación de la configuración. Para crear la configuración de storage ejecute el siguiente comando
+```
+ibmcloud sat storage config create --location $nombre_ubicacion --name $nombre_config --tempalte-name local-storage-operator --template-version 1.0.0
+ibmcloud sat storage assignment create --location $nombre_ubicacion --config $nombre_config --cluster $nombre_cluster 
+```
+
+
+## Configuración de ODF Storage en la Satellite Location
+
+Para la configuración de storage de ODF también debe verficar las mismas condiciones de los discos que para Local Storage, verifique el tamaño, el fromato y el mountponit. Luego deberá ejecutar los siguientes comandos.
+```
+ibmcloud sat storage config create --location $nombre_ubicacion --name $nombre_config --tempalte-name odf-local --template-version 4.12 -p "auto-discover-devices=flase" -p "billing-type=advanced" -p "cluster-encryption=false" -p "ignore-noobaa=false" -p "kms-encryption=false" -p "num-of-osd=1" -p "odf-upgrade=false" -p "osd-device-path=/dev/$nombre_disco" -p "perform-cleanup=false" -p "worker-nodes=$nombres_nodos" -p "iam-api-key=$api_key"
+ibmcloud sat storage assignment create --location $nombre_ubicacion --config $nombre_config --cluster $nombre_cluster 
+```
+La versión puede cambiar según la versión de cluster, verifique que sea la misma versión de su cluster, en este caso 4.12.
+
+- Para $nombre_ ubuicación es el nombre de la ubicación de satellite
+- $nombre_config es el nombre que desea colocarle a la configuración de storage
+- $nombre_disco es el nombre del disco de 500G
+- $nombe_ndos es el nombre de cada nodo separado por comas ejemplo: nodo1,nodo2,nodo3
+- $api_key es la api_key de sus usuario que se puede generar desde ibm cloud, puede ver la siguiente [documentación](https://www.ibm.com/docs/en/storagevirtualizecl/8.1.x?topic=installing-creating-api-key)
+- $nombre_cluster es el nombre del cluster de Openshift
+
+  Luego de crear y asignar la configuración de storage al cluster, se crearan varios operadores de ODF, esto tomará hasta 20 minutos en completarse, después de esto, deberá entrar a la sección de storage classs, para verificar que esten creados los SC. Debe ver algo similar a lo siguiente.
+
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/bce63998-a8fc-495b-821d-aa16f2ec2e5e3" width="1000" >
+
+También deberá ver que, los persistent volumes estén creados.
+
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/6e913827-281f-4bed-ba70-f24733ddc703" width="1000">
+
+ Debe ser un totoal de 5. Por último, verifique qeu tenga la sección Data Foudation dentro de Storage, al entrar deberá ver algo similar a esto:
+ 
+ <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/1c8010b5-2e2b-4b23-b37a-f3b7e745208a" width="1000">
+
+Verifique que la capacidad del sistema total sea la suma totla de los discos de 500 g o el tamaño con el cual lo haya creado.
+
 ## Referencias :page_facing_up:
 - [Local Storage Operator - Block](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-block&interface=ui)
 - [Local Storage Operator - File](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-file&interface=ui)
