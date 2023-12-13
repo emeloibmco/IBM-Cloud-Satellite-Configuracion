@@ -183,7 +183,33 @@ ibmcloud oc cluster create satellite --location $location --name $nombreOpenshif
 Los parámetros cmabiarán si desea instalar otra versión de OP o las máquinas tienen otro sistema operativo. Luego de su creación podrá ver el estado del cluster desde ibm cloud, luego de que el cluster esté desplegado correctamente deberá ver lo siguiente:
 <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/0a365411-2d83-4680-b36a-62b609f55459" width="1000" >
 
-Aquí podrá ingresar al cluster con el botón azul 
+Aquí podrá ingresar al cluster con el botón azul. Para verificar que el cluster está creado completamente, ingrese a Openshift.
+
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/6c261177-2053-4cc3-a2cc-d826f96bdfde" width="1000" >
+
+Haga click sobre el botón copy login command, copie el comando log in with this token e ingreselo en la consola de su máquina virtual, recuerde que es necesario tener el cli de OC en su consola. Habrá ingresado a su cluster desde consola para poder ejecutar comandos oc. Ahora ejecute el comando ```oc get co```. Debe ver algo similar a lo siguiente:
+
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/6f9810a2-59f8-40ee-9e74-f8dd2e39907c" width="800" >
+
+Todos los elementos deben estar disponibles y no en estado progressing o degraded.
+
+## Configuración de Local Storage en la Satellite Location
+
+Si está realizando el despliegue de arquitectura con la configuración de storage local. Luego de haber ingresado desde la consola a Openshift, se debe ingresar a cada uno de los nodos de forma debug para ver los discos disponibles. Esto se debe realizar de esta forma debido a que se pierde el acceso de forma habitual a la máquina luego de instalar Openshift. para ello primero liste los nodos con el comando ```oc get nodes```. Verá los siguientes nodos a excepción de los nodos con nombre ODF. 
+
+
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/0d0c57f3-97e9-4257-b3eb-9ec2f3fcd648" width="800" >
+
+Teniendo en cuenta el nombre de cada nodo, ejecute el comando:
+``` 
+oc debug node/$nombre_nodo
+```
+Deberá ver algo similar a lo siguiente:
+
+
+<img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/b2d7ae38-7039-4357-abce-fe900b4316c3" width="1000" >
+
+Ejecute el comando que le sugiere ```chroot /host```. Luegi es necesario identificar los discos que tendrán la característica de block y de file. 
 ## Referencias :page_facing_up:
 - [Local Storage Operator - Block](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-block&interface=ui)
 - [Local Storage Operator - File](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-file&interface=ui)
