@@ -77,7 +77,7 @@ Luego debe seleccionar la cuenta en la que desea crear la máquinas, ingrese el 
     ibmcloud sl vs create -H host01-openshift -D ibm-satellite.cloud -c 4 -m 16384 -d dal13 -o REDHAT_8_64 --disk 25 --disk 100 -f
     ```
 
-### Creación de un Satellite Location.
+## Creación de un Satellite Location.
 Para la creación de una ubicación de satellite corra este comando en su máquina virtual:
 
 ```
@@ -102,7 +102,7 @@ Hasta que vea la siguiente imagen:
 <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/cf0b2493-72f3-4822-809a-b9bfabd5c05d" alt="Arquitectura-local-storage" width="600" >
 
 
-### Configurar y attachar máquinas a la ubicación de Satellite
+## Configurar y attachar máquinas a la ubicación de Satellite
 
 Para este paso es necesario que tenga instalado en su máquina el comando ```sshpass```
 Ahora se debe configurar y attachar las máquinas a la ubicación, para ello, es necesario descargar un script que genera la ubicación para agreagar máquinas, para descargar este script ejecute el siguiente comando:
@@ -170,7 +170,7 @@ ibmcloud sat host list --location $name-location
 
 Donde $name-location es el nombre de su ubicación. El siguiente paso será crear un cluster de Openshift.
 
-### Despliegue de un clúster de Openshift
+## Despliegue de un clúster de Openshift
 Lo primero que se debe realizar es etiquetar las máquinas que estarán en Openshift. Si está realizando la configuración de storage local, esta etiqueta se colocará a todas las máuinas restantes. Si esta realizando la configuración de ODF, se hace igual, menos a las maquinas destiandas a ODF.
 ```
 ibmcloud sat host update --host $name --host-label $namelabel=$label --location $location
@@ -184,7 +184,7 @@ Los parámetros cmabiarán si desea instalar otra versión de OP o las máquinas
 <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/0a365411-2d83-4680-b36a-62b609f55459" width="1000" >
 
 Aquí podrá ingresar al cluster con el botón azul 
-### Referencias :page_facing_up:
+## Referencias :page_facing_up:
 - [Local Storage Operator - Block](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-block&interface=ui)
 - [Local Storage Operator - File](https://cloud.ibm.com/docs/satellite?topic=satellite-storage-local-volume-file&interface=ui)
 - [Mounting File Storage](https://cloud.ibm.com/docs/FileStorage?topic=FileStorage-mountingLinux&interface=ui)
