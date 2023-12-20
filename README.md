@@ -234,7 +234,7 @@ ibmcloud sat storage config create --location $nombre_ubicacion --name $nombre_c
 ibmcloud sat storage assignment create --location $nombre_ubicacion --config $nombre_config --cluster $nombre_cluster 
 ```
 
-
+Esto creará un operador en el namespace openshift-local-storage
 ## Configuración de ODF Storage en la Satellite Location
 
 Para la configuración de storage de ODF también debe verficar las mismas condiciones de los discos que para Local Storage, verifique el tamaño, el fromato y el mountponit. Luego deberá ejecutar los siguientes comandos.
