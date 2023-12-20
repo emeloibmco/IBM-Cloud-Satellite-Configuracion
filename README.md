@@ -38,8 +38,13 @@ Dependiendo la arquitectura que se desea implementar, la cantidad de máquinas y
 Hay varias formas de crear estas máquinas virtuales, desde la interfáz gráfica de [ibm cloud](https://cloud.ibm.com/login), con el shell de ibm o con una máquina virtual de linux. Las útlimas dos formas son bastantes similares y en este caso se hará con una máquina virtual. 
 
 En la máquina virtual debe tener instalado los cli de [ibmcloud](https://cloud.ibm.com/docs/cli?topic=cli-install-ibmcloud-cli) y de [Openshift](https://www.ibm.com/docs/en/eam/4.2?topic=cli-installing-cloudctl-kubectl-oc), este último no es necesario para la creación de las máquinas virtuales pero será utilizado en pasos de gestión del cluster. Estos comandos ya están instalados en el shell de ibm cloud. También debería tener el comnado ```curl```. 
+1. El primer paso es instalar todos los plugins del cli de ibmcloud para la realización de todos los comandos. 
 
-1. Desde el terminal de linux, ejecute este comando
+```
+ibmcloud plugin install -a
+```
+
+2. Desde el terminal de linux, ejecute este comando
 
     ```
    ibmcloud login -sso
@@ -48,7 +53,7 @@ En la máquina virtual debe tener instalado los cli de [ibmcloud](https://cloud.
     Esto le pedirá una confirmación para abrir un buscador, coloque ```y``` o ```yes```. En el buscador ingrese con su cuenta de ibm, al final le dará un código de la forma: ```abc1abcAB2```, ingreselo en la terminal de linux, tenga en cuenta que al escribirlo o pegarlo no lo verá.
 Luego debe seleccionar la cuenta en la que desea crear la máquinas, ingrese el número correspondiente.
 
-2. Ya estaría dentro de la ceunta en la que desea crear sus Virtual Servers, pero aún le va a solicitar en qué grupo de recursos deberá crear los difernetes servicios. Ejecute el sieguiente comanddo 
+3. Ya estaría dentro de la ceunta en la que desea crear sus Virtual Servers, pero aún le va a solicitar en qué grupo de recursos deberá crear los difernetes servicios. Ejecute el sieguiente comanddo 
 
     ```
    ibmcloud target -g RESOURCE_GROUP
@@ -56,7 +61,7 @@ Luego debe seleccionar la cuenta en la que desea crear la máquinas, ingrese el 
 
     Donde el ```RESOURCE_GROUP``` es el nombre del grupo de recursos donde va a crear los servicios. Después de esto, su máquina virtual debería estar siempre logeada a la cuentad e ibm cloud en ese grupo de recursos en específico
 
- 3. Lo primero que podemos hacer es visualizar las máquinas virtuales que ya estén creadas:
+ 4. Lo primero que podemos hacer es visualizar las máquinas virtuales que ya estén creadas:
 
     ```
     ibmcloud sl vs list
@@ -64,7 +69,7 @@ Luego debe seleccionar la cuenta en la que desea crear la máquinas, ingrese el 
 
     Con este comando verá el id, los hostname, el dominio y demás información del hardaware y la network de los Virtual server que ya están creados.
 
-4.  Para crear una sola máquina virtual ejecute este comando.
+5.  Para crear una sola máquina virtual ejecute este comando.
     
     ```
     ibmcloud sl vs create -H host01-openshift -D ibm-satellite.cloud -c 4 -m 16384 -d dal13 -o REDHAT_8_64 --disk 25 --disk 100
@@ -137,7 +142,13 @@ Donde $pwd es la contraseña que obtuvo anteriormente y $ip es la dirección ip 
 
 <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/f3b0806c-f6c2-461a-bd01-ad0519702de3" width="600" >
 
+Si no pudo ingresar al virtual server instance puede ser debído a la configuración de ssh de su máquina virtual. Ejecute los isguiente comandos y vuelva inetntar ingresar. 
 
+```
+cd ~/.ssh
+rm *
+```
+Esto eliminará todas los elementos de esta carpeta.
 Acá deberá actualizar e instalar varios repositorios de Red Hat, para ello, ejecute los siguientes comandos:
 ```
 subscription-manager refresh
