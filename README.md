@@ -237,7 +237,7 @@ ibmcloud sat storage assignment create --location $nombre_ubicacion --config $no
 Esto creará un operador en el namespace openshift-local-storage
 ## Configuración de ODF Storage en la Satellite Location
 
-Para la configuración de storage de ODF también debe verficar las mismas condiciones de los discos que para Local Storage, verifique el tamaño, el fromato y el mountponit. Luego deberá ejecutar los siguientes comandos.
+Para la configuración de storage de ODF también debe verficar las mismas condiciones de los discos que para Local Storage. verifique el tamaño, el formato y el mountponit y que cumplan también con las características de la arquitectura mostrada en las priemras imagenes. Luego deberá ejecutar los siguientes comandos.
 ```
 ibmcloud sat storage config create --location $nombre_ubicacion --name $nombre_config --tempalte-name odf-local --template-version 4.12 -p "auto-discover-devices=flase" -p "billing-type=advanced" -p "cluster-encryption=false" -p "ignore-noobaa=false" -p "kms-encryption=false" -p "num-of-osd=1" -p "odf-upgrade=false" -p "osd-device-path=/dev/$nombre_disco" -p "perform-cleanup=false" -p "worker-nodes=$nombres_nodos" -p "iam-api-key=$api_key"
 ibmcloud sat storage assignment create --location $nombre_ubicacion --config $nombre_config --cluster $nombre_cluster 
@@ -251,7 +251,7 @@ La versión puede cambiar según la versión de cluster, verifique que sea la mi
 - $api_key es la api_key de sus usuario que se puede generar desde ibm cloud, puede ver la siguiente [documentación](https://www.ibm.com/docs/en/storagevirtualizecl/8.1.x?topic=installing-creating-api-key)
 - $nombre_cluster es el nombre del cluster de Openshift
 
-  Luego de crear y asignar la configuración de storage al cluster, se crearan varios operadores de ODF, esto tomará hasta 20 minutos en completarse, después de esto, deberá entrar a la sección de storage classs, para verificar que esten creados los SC. Debe ver algo similar a lo siguiente.
+  Luego de crear y asignar la configuración de storage al cluster, se crearan varios operadores de ODF, esto tomará hasta 20 minutos en completarse, después de esto, deberá entrar a la sección de storage classs, para verificar que esten creados los SC. Debe ver algo similar a lo siguiente. Esta configuración también se puede realizar desde la consola de IBM cloud, en la sección de storage de la ubicación de satellite. Tenga en cuenta llenar los mismos parámetros que se muestran en el comando anterior.
 
 <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/bce63998-a8fc-495b-821d-aa16f2ec2e5e3" width="1000" >
 
