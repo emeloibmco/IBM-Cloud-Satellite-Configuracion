@@ -163,6 +163,8 @@ sshpass -p $pwd  scp $nombre_script root@$ip:/home
 ```
 Dónde $pwd es la contraseña, $ip es la ip pública y $nombre_script es la ruta absoluto y el nombre del script ternimado en .sh. Recuerde que si está ejecutando este comando desde la carpeta donde se encuentra el script no es necesario colocar la ruta completa si no solo el nombre del archivo. 
 
+Vuelva a ingresar a la máquina y dirijase a la carpeta /home con el comando ```cd /home``` ejecute el comando  ```chmod +x $nombredelscrpit``` para dar permisos de ejecución al archivo, en este caso no será toda la ruta del archivo sino solo el nombre del archivo. Por útlimo ejecute el script ```./$nombrescipt```
+
 Este paso deberá realizarlo con todas las máquinas que desee agregar al satellite location. Al final deberá ver algo similar a lo siguiente desde ibm cloud y la ubicación de su satellite.
 <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/7f5fcdb9-4697-4d5e-8063-34f0d308af20" width="1000" >
 
