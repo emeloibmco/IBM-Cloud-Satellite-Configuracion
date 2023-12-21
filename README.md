@@ -175,10 +175,10 @@ ibmcloud sat host assign --host $name --location $location --zone us-south-$zone
 ```
 donde $name es el nombre de la máquina que desea assiganar como control plane y $zone es un número entre 1 y 3. Como va a asignar 3 máquinas, cada una debe quedar asignada en zonas diferentes. 
 
-Lueego de asignar estas máquinas como control planes, en la vista de ibm cloud podrá ver que ya se encontrarán asignadas pero en estado de aprovisionamiento, espere a que el estado sea ready. También puede ver el estado de las máquinas desde la consola de su maquina virtual:
+Luego de asignar estas máquinas como control planes, en la vista de ibm cloud podrá ver que ya se encontrarán asignadas pero en estado de aprovisionamiento, espere a que el estado sea ready. También puede ver el estado de las máquinas desde la consola de su maquina virtual:
 
 ```
-ibmcloud sat host list --location $name-location
+ibmcloud sat host ls--location $name-location
 ```
 
 Donde $name-location es el nombre de su ubicación. El siguiente paso será crear un cluster de Openshift.
@@ -193,7 +193,7 @@ Para la creación de un cluster de openshift en satellite desde consola puede ej
 ibmcloud oc cluster create satellite --location $location --name $nombreOpenshift --version 4.12.37_openshift --workers 3 --operating-system RHEL8 --enable-config-admin --host-label $namelabel=$label 
 ```
 
-Los parámetros cmabiarán si desea instalar otra versión de OP o las máquinas tienen otro sistema operativo. Luego de su creación podrá ver el estado del cluster desde ibm cloud, luego de que el cluster esté desplegado correctamente deberá ver lo siguiente:
+Los parámetros cambiarán si desea instalar otra versión de OP o las máquinas tienen otro sistema operativo. Luego de su creación podrá ver el estado del cluster desde ibm cloud, luego de que el cluster esté desplegado correctamente deberá ver lo siguiente:
 <img src="https://github.com/emeloibmco/IBM-Cloud-Satellite-Configuracion/assets/52113892/0a365411-2d83-4680-b36a-62b609f55459" width="1000" >
 
 Aquí podrá ingresar al cluster con el botón azul. Para verificar que el cluster está creado completamente, ingrese a Openshift.
@@ -238,6 +238,16 @@ ibmcloud sat storage assignment create --location $nombre_ubicacion --config $no
 
 Esto creará un operador en el namespace openshift-local-storage
 ## Configuración de ODF Storage en la Satellite Location
+En este casó deberá crear un segundo worker pool con las máquinas destinadas a ODF, para ello ejecute el siguiente comando para etiquetar a los nodos de odf 
+```
+ibmcloud sat host update --host $name --host-label $namelabel=$label --location $location
+```
+
+luego para crear el worker pool:
+
+```
+
+```
 
 Para la configuración de storage de ODF también debe verficar las mismas condiciones de los discos que para Local Storage. verifique el tamaño, el formato y el mountponit y que cumplan también con las características de la arquitectura mostrada en las priemras imagenes. Luego deberá ejecutar los siguientes comandos.
 ```
