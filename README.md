@@ -190,7 +190,7 @@ ibmcloud sat host update --host $name --host-label $namelabel=$label --location 
 ```
 Para la creación de un cluster de openshift en satellite desde consola puede ejecutar el sisguiente comando
 ```
-ibmcloud oc cluster create satellite --location $location --name $nombreOpenshift --version 4.12.37_openshift --workers 3 --operating-system RHEL8 --enable-config-admin --host-label $namelabel=$label 
+ibmcloud oc cluster create satellite --location $location --name $nombreOpenshift --version 4.12.44_openshift --workers 3 --operating-system RHEL8 --enable-config-admin --host-label $namelabel=$label 
 ```
 
 Los parámetros cambiarán si desea instalar otra versión de OP o las máquinas tienen otro sistema operativo. Luego de su creación podrá ver el estado del cluster desde ibm cloud, luego de que el cluster esté desplegado correctamente deberá ver lo siguiente:
@@ -246,9 +246,9 @@ ibmcloud sat host update --host $name --host-label $namelabel=$label --location 
 luego para crear el worker pool:
 
 ```
-
+ibmcloud oc worker-pool create satellite --name $nombreworkerpool --size-per-zone 3 --zone us-south-1 --host-label $etiquetaodf --cluster $nombreclusteropenshift
 ```
-
+Luego del correcto despliegue de todos los nodos, entre al cluster de Openshift y copie 
 Para la configuración de storage de ODF también debe verficar las mismas condiciones de los discos que para Local Storage. verifique el tamaño, el formato y el mountponit y que cumplan también con las características de la arquitectura mostrada en las priemras imagenes. Luego deberá ejecutar los siguientes comandos.
 ```
 ibmcloud sat storage config create --location $nombre_ubicacion --name $nombre_config --tempalte-name odf-local --template-version 4.12 -p "auto-discover-devices=flase" -p "billing-type=advanced" -p "cluster-encryption=false" -p "ignore-noobaa=false" -p "kms-encryption=false" -p "num-of-osd=1" -p "odf-upgrade=false" -p "osd-device-path=/dev/$nombre_disco" -p "perform-cleanup=false" -p "worker-nodes=$nombres_nodos" -p "iam-api-key=$api_key"
