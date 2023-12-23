@@ -250,9 +250,8 @@ ibmcloud oc worker-pool create satellite --name $nombreworkerpool --size-per-zon
 ```
 Luego del correcto despliegue de todos los nodos, entre al cluster de Openshift y copie 
 Para la configuración de storage de ODF también debe verficar las mismas condiciones de los discos que para Local Storage. verifique el tamaño, el formato y el mountponit y que cumplan también con las características de la arquitectura mostrada en las priemras imagenes. Luego deberá ejecutar los siguientes comandos.
-```
-ibmcloud sat storage config create --location $nombre_ubicacion --name $nombre_config --tempalte-name odf-local --template-version 4.12 -p "auto-discover-devices=false" -p "billing-type=advanced" -p "cluster-encryption=false" -p "ignore-noobaa=false" -p "kms-encryption=false" -p "num-of-osd=1" -p "odf-upgrade=false" -p "osd-device-path=/dev/$nombre_disco" -p "perform-cleanup=false" -p "worker-nodes=$nombres_nodos" -p "iam-api-key=$api_key"
-ibmcloud sat storage assignment create --location $nombre_ubicacion --config $nombre_config --cluster $nombre_cluster 
+```ibmcloud sat storage config create --location $location --name config-odf --template-name odf-local --template-version 4.12 -p "auto-discover-devices=false" -p "billing-type=advanced" -p "cluster-encryption=false" -p "ignore-noobaa=false" -p "kms-encryption=false" -p "num-of-osd=1" -p "odf-upgrade=false" -p "osd-device-path=/dev/xvdf" -p "perform-cleanup=false" -p "worker-nodes=host-odf-01,host-odf-02,host-odf-03" -p "iam-api-key=$apikey"
+ibmcloud sat storage assignment create --config config-odf --cluster $nombreOpenshift 
 ```
 La versión puede cambiar según la versión de cluster, verifique que sea la misma versión de su cluster, en este caso 4.12.
 
