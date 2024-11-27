@@ -1,3 +1,6 @@
+#!/bin/bash
+echo "Iniciando el script attachHost-satellite-location.sh" >> /home/attachHost-debug.log
+
 #!/usr/bin/env bash
 cat << 'HERE' >>/usr/local/bin/ibm-host-attach.sh
 #!/usr/bin/env bash
@@ -308,3 +311,5 @@ chmod 0644 /etc/systemd/system/ibm-host-attach.service
 systemctl daemon-reload
 systemctl enable ibm-host-attach.service
 systemctl start ibm-host-attach.service
+
+echo "Fin del script attachHost-satellite-location.sh" >> /home/attachHost-debug.log
