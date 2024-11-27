@@ -35,6 +35,15 @@ resource "ibm_network_vlan" "private_vlan" {
   router_hostname = "bcr01a.${var.datacenter}"
 }
 ##############################################################################
+# Gestión de Claves SSH
+##############################################################################
+
+# Cargar la clave pública SSH en IBM Cloud
+resource "ibm_compute_ssh_key" "ssh_key" {
+  name       = "terraform-ssh-key"
+  public_key = file("${path.module}/id_rsa.pub")
+}
+##############################################################################
 # Control plane
 # ibmcloud sl hardware create-options
 # OS_RHEL_8_X_64_BIT_PER_PROCESSOR_LICENSING      REDHAT_8_64
@@ -55,9 +64,7 @@ resource "ibm_compute_vm_instance" "control_plane" {
     public_vlan_id = ibm_network_vlan.public_vlan.id
     private_vlan_id = ibm_network_vlan.private_vlan.id
 
-  ssh_keys = [
-    file("${path.module}/id_rsa.pub")
-  ]
+    ssh_key_ids          = [ibm_compute_ssh_key.ssh_key.id]
 
     # Copia el archivo setup_satellite.sh
     provisioner "file" {
@@ -121,10 +128,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
     public_vlan_id = ibm_network_vlan.public_vlan.id
     private_vlan_id = ibm_network_vlan.private_vlan.id
 
-
-  ssh_keys = [
-    file("${path.module}/id_rsa.pub")
-  ]
+    ssh_key_ids          = [ibm_compute_ssh_key.ssh_key.id]
 
     # Copia el archivo setup_satellite.sh
     provisioner "file" {
@@ -188,9 +192,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 #    public_vlan_id = ibm_network_vlan.public_vlan.id
 #    private_vlan_id = ibm_network_vlan.private_vlan.id
 #
-#  ssh_keys = [
-#    file("${path.module}/id_rsa.pub")
-#  ]
+#    ssh_key_ids          = [ibm_compute_ssh_key.ssh_key.id]
 #
 #    # Copia el archivo setup_satellite.sh
 #    provisioner "file" {
