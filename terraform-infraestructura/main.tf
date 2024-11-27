@@ -26,13 +26,11 @@ resource "ibm_network_vlan" "public_vlan" {
   name            = "test_vlan"
   datacenter      = var.datacenter
   type            = "PUBLIC"
-  router_hostname = "fcr01a.${var.datacenter}"
 }
 resource "ibm_network_vlan" "private_vlan" {
   name            = "test_vlan"
   datacenter      = var.datacenter
   type            = "PRIVATE"
-  router_hostname = "fcr02a.{var.datacenter}"
 }
 ##############################################################################
 # Control plane
