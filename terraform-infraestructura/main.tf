@@ -23,14 +23,16 @@ provider ibm {
 ##############################################################################
 
 resource "ibm_network_vlan" "public_vlan" {
-  name            = "test_vlan"
+  name            = "public_vlan"
   datacenter      = var.datacenter
   type            = "PUBLIC"
+  router_hostname = "fcr01a.${var.datacenter}"
 }
 resource "ibm_network_vlan" "private_vlan" {
-  name            = "test_vlan"
+  name            = "private_vlan"
   datacenter      = var.datacenter
   type            = "PRIVATE"
+  router_hostname = "bcr01a.{var.datacenter}"
 }
 ##############################################################################
 # Control plane
