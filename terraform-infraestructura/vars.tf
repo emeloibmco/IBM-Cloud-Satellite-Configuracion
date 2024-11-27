@@ -20,16 +20,6 @@ variable ibm_region {
       )
     }
 }
-variable public_vlan_name {
-    description = "vlan name for the cluster"
-    type        = string
-    default     = "dal13.fcr02.781"
-}
-variable private_vlan_name {
-    description = "vlan name for the cluster"
-    type        = string
-    default     = "dal13.bcr02.815"
-}
 variable datacenter {
     type        = string
     default     = "dal10"
