@@ -26,13 +26,13 @@ resource "ibm_network_vlan" "public_vlan" {
   name            = "test_vlan"
   datacenter      = var.datacenter
   type            = "PUBLIC"
-  router_hostname = "fcr01a."+"${var.datacenter}"
+  router_hostname = "fcr01a.${var.datacenter}"
 }
 resource "ibm_network_vlan" "private_vlan" {
   name            = "test_vlan"
   datacenter      = var.datacenter
   type            = "PRIVATE"
-  router_hostname = "fcr02a."+"${var.datacenter}"
+  router_hostname = "fcr02a.{var.datacenter}"
 }
 ##############################################################################
 # Control plane
@@ -52,8 +52,8 @@ resource "ibm_compute_vm_instance" "control_plane" {
     disks                = each.value.disks
     local_disk           = false
     hostname = each.value.hostname
-    public_vlan_id = data.ibm_network_vlan.public_vlan.id
-    private_vlan_id = data.ibm_network_vlan.private_vlan.id
+    public_vlan_id = ibm_network_vlan.public_vlan.id
+    private_vlan_id = ibm_network_vlan.private_vlan.id
 }
 
 ##############################################################################
@@ -72,7 +72,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
     disks                = each.value.disks
     local_disk           = false
     hostname = each.value.hostname
-    public_vlan_id = data.ibm_network_vlan.public_vlan.id
+    public_vlan_id = ibm_network_vlan.public_vlan.id
     private_vlan_id = data.ibm_network_vlan.private_vlan.id
 }
 
