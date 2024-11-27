@@ -83,7 +83,7 @@ resource "ibm_compute_vm_instance" "control_plane" {
             type        = "ssh"
             user        = "root"
             private_key = file("${path.module}/id_rsa")
-            host        = self.primary_ip_address
+            host        = self.primary_network_interface[0].primary_ip
         }
     }
 
@@ -104,7 +104,7 @@ resource "ibm_compute_vm_instance" "control_plane" {
             type        = "ssh"
             user        = "root"
             private_key = file("${path.module}/id_rsa")
-            host        = self.primary_ip_address
+            host        = self.primary_network_interface[0].primary_ip
         }
     }
 }
@@ -147,7 +147,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
             type        = "ssh"
             user        = "root"
             private_key = file("${path.module}/id_rsa")
-            host        = self.primary_ip_address
+            host        = self.primary_network_interface[0].primary_ip
         }
     }
     
@@ -168,7 +168,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
             type        = "ssh"
             user        = "root"
             private_key = file("${path.module}/id_rsa")
-            host        = self.primary_ip_address
+            host        = self.primary_network_interface[0].primary_ip
         }
     }
 }
@@ -211,7 +211,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 #            type        = "ssh"
 #            user        = "root"
 #            private_key = file("${path.module}/id_rsa")
-#            host        = self.primary_ip_address
+#            host        = self.primary_network_interface[0].primary_ip
 #        }
 #    }
 #    
@@ -232,7 +232,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 #            type        = "ssh"
 #            user        = "root"
 #            private_key = file("${path.module}/id_rsa")
-#            host        = self.primary_ip_address
+#            host        = self.primary_network_interface[0].primary_ip
 #        }
 #    }
 #}
