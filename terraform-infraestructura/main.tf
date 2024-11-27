@@ -70,6 +70,13 @@ resource "ibm_compute_vm_instance" "control_plane" {
     provisioner "file" {
         source      = "${path.module}/setup_satellite.sh"
         destination = "/home/setup_satellite.sh"
+
+        connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.ipv4_address
+        }
     }
 
     # Ejecuta el archivo setup_satellite.sh
@@ -91,6 +98,13 @@ resource "ibm_compute_vm_instance" "control_plane" {
     provisioner "file" {
         source      = "${path.module}/attachHost-satellite-location.sh"
         destination = "/home/attachHost-satellite-location.sh"
+
+          connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.ipv4_address
+        }
     }
 
     # Ejecuta attachHost-satellite-location.sh en segundo plano
@@ -134,6 +148,13 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
     provisioner "file" {
         source      = "${path.module}/setup_satellite.sh"
         destination = "/home/setup_satellite.sh"
+
+        connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.ipv4_address
+        }
     }
 
     # Ejecuta el archivo setup_satellite.sh
@@ -155,6 +176,13 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
     provisioner "file" {
         source      = "${path.module}/attachHost-satellite-location.sh"
         destination = "/home/attachHost-satellite-location.sh"
+
+        connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.ipv4_address
+        }
     }
 
     # Ejecuta attachHost-satellite-location.sh en segundo plano
@@ -198,6 +226,13 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 #    provisioner "file" {
 #        source      = "${path.module}/setup_satellite.sh"
 #        destination = "/home/setup_satellite.sh"
+#
+#        connection {
+#            type        = "ssh"
+#            user        = "root"
+#            private_key = file("${path.module}/id_rsa")
+#            host        = self.ipv4_address
+#        }
 #    }
 #
 #    # Ejecuta el archivo setup_satellite.sh
@@ -219,6 +254,13 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 #    provisioner "file" {
 #        source      = "${path.module}/attachHost-satellite-location.sh"
 #        destination = "/home/attachHost-satellite-location.sh"
+#
+#        connection {
+#            type        = "ssh"
+#            user        = "root"
+#            private_key = file("${path.module}/id_rsa")
+#            host        = self.ipv4_address
+#        }
 #    }
 #
 #    # Ejecuta attachHost-satellite-location.sh en segundo plano
