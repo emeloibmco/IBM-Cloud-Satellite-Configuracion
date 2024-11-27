@@ -79,21 +79,6 @@ resource "ibm_compute_vm_instance" "control_plane" {
         }
     }
 
-    # Ejecuta el archivo setup_satellite.sh
-    provisioner "remote-exec" {
-        inline = [
-            "chmod +x /home/setup_satellite.sh",
-            "/home/setup_satellite.sh"
-        ]
-
-        connection {
-            type        = "ssh"
-            user        = "root"
-            private_key = file("${path.module}/id_rsa")
-            host        = self.ipv4_address
-        }
-    }
-
     # Copia el archivo attachHost-satellite-location.sh
     provisioner "file" {
         source      = "${path.module}/attachHost-satellite-location.sh"
@@ -107,9 +92,10 @@ resource "ibm_compute_vm_instance" "control_plane" {
         }
     }
 
-    # Ejecuta attachHost-satellite-location.sh en segundo plano
     provisioner "remote-exec" {
         inline = [
+            "chmod +x /home/setup_satellite.sh",
+            "/home/setup_satellite.sh",
             "chmod +x /home/attachHost-satellite-location.sh",
             "sudo nohup bash /home/attachHost-satellite-location.sh &"
         ]
@@ -156,21 +142,6 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
             host        = self.ipv4_address
         }
     }
-
-    # Ejecuta el archivo setup_satellite.sh
-    provisioner "remote-exec" {
-        inline = [
-            "chmod +x /home/setup_satellite.sh",
-            "/home/setup_satellite.sh"
-        ]
-
-        connection {
-            type        = "ssh"
-            user        = "root"
-            private_key = file("${path.module}/id_rsa")
-            host        = self.ipv4_address
-        }
-    }
     
     # Copia el archivo attachHost-satellite-location.sh
     provisioner "file" {
@@ -188,6 +159,8 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
     # Ejecuta attachHost-satellite-location.sh en segundo plano
     provisioner "remote-exec" {
         inline = [
+            "chmod +x /home/setup_satellite.sh",
+            "/home/setup_satellite.sh",
             "chmod +x /home/attachHost-satellite-location.sh",
             "sudo nohup bash /home/attachHost-satellite-location.sh &"
         ]
@@ -235,20 +208,6 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 #        }
 #    }
 #
-#    # Ejecuta el archivo setup_satellite.sh
-#    provisioner "remote-exec" {
-#        inline = [
-#            "chmod +x /home/setup_satellite.sh",
-#            "/home/setup_satellite.sh"
-#        ]
-#
-#        connection {
-#            type        = "ssh"
-#            user        = "root"
-#            private_key = file("${path.module}/id_rsa")
-#            host        = self.ipv4_address
-#        }
-#    }
 #    
 #    # Copia el archivo attachHost-satellite-location.sh
 #    provisioner "file" {
@@ -263,9 +222,10 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 #        }
 #    }
 #
-#    # Ejecuta attachHost-satellite-location.sh en segundo plano
 #    provisioner "remote-exec" {
 #        inline = [
+#            "chmod +x /home/setup_satellite.sh",
+#            "/home/setup_satellite.sh",
 #            "chmod +x /home/attachHost-satellite-location.sh",
 #            "sudo nohup bash /home/attachHost-satellite-location.sh &"
 #        ]
