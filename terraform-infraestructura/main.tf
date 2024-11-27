@@ -54,6 +54,52 @@ resource "ibm_compute_vm_instance" "control_plane" {
     hostname = each.value.hostname
     public_vlan_id = ibm_network_vlan.public_vlan.id
     private_vlan_id = ibm_network_vlan.private_vlan.id
+
+  ssh_keys = [
+    file("${path.module}/id_rsa.pub")
+  ]
+
+    # Copia el archivo setup_satellite.sh
+    provisioner "file" {
+        source      = "${path.module}/setup_satellite.sh"
+        destination = "/home/setup_satellite.sh"
+    }
+
+    # Ejecuta el archivo setup_satellite.sh
+    provisioner "remote-exec" {
+        inline = [
+            "chmod +x /home/setup_satellite.sh",
+            "/home/setup_satellite.sh"
+        ]
+
+        connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.primary_ip_address
+        }
+    }
+
+    # Copia el archivo attachHost-satellite-location.sh
+    provisioner "file" {
+        source      = "${path.module}/attachHost-satellite-location.sh"
+        destination = "/home/attachHost-satellite-location.sh"
+    }
+
+    # Ejecuta attachHost-satellite-location.sh en segundo plano
+    provisioner "remote-exec" {
+        inline = [
+            "chmod +x /home/attachHost-satellite-location.sh",
+            "sudo nohup bash /home/attachHost-satellite-location.sh &"
+        ]
+
+        connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.primary_ip_address
+        }
+    }
 }
 
 ##############################################################################
@@ -74,6 +120,53 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
     hostname = each.value.hostname
     public_vlan_id = ibm_network_vlan.public_vlan.id
     private_vlan_id = ibm_network_vlan.private_vlan.id
+
+
+  ssh_keys = [
+    file("${path.module}/id_rsa.pub")
+  ]
+
+    # Copia el archivo setup_satellite.sh
+    provisioner "file" {
+        source      = "${path.module}/setup_satellite.sh"
+        destination = "/home/setup_satellite.sh"
+    }
+
+    # Ejecuta el archivo setup_satellite.sh
+    provisioner "remote-exec" {
+        inline = [
+            "chmod +x /home/setup_satellite.sh",
+            "/home/setup_satellite.sh"
+        ]
+
+        connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.primary_ip_address
+        }
+    }
+    
+    # Copia el archivo attachHost-satellite-location.sh
+    provisioner "file" {
+        source      = "${path.module}/attachHost-satellite-location.sh"
+        destination = "/home/attachHost-satellite-location.sh"
+    }
+
+    # Ejecuta attachHost-satellite-location.sh en segundo plano
+    provisioner "remote-exec" {
+        inline = [
+            "chmod +x /home/attachHost-satellite-location.sh",
+            "sudo nohup bash /home/attachHost-satellite-location.sh &"
+        ]
+
+        connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.primary_ip_address
+        }
+    }
 }
 
 ##############################################################################
@@ -92,6 +185,52 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 #    disks                = each.value.disks
 #    local_disk           = false
 #    hostname = each.value.hostname
-#    public_vlan_id = data.ibm_network_vlan.public_vlan.id
-#    private_vlan_id = data.ibm_network_vlan.private_vlan.id
+#    public_vlan_id = ibm_network_vlan.public_vlan.id
+#    private_vlan_id = ibm_network_vlan.private_vlan.id
+#
+#  ssh_keys = [
+#    file("${path.module}/id_rsa.pub")
+#  ]
+#
+#    # Copia el archivo setup_satellite.sh
+#    provisioner "file" {
+#        source      = "${path.module}/setup_satellite.sh"
+#        destination = "/home/setup_satellite.sh"
+#    }
+#
+#    # Ejecuta el archivo setup_satellite.sh
+#    provisioner "remote-exec" {
+#        inline = [
+#            "chmod +x /home/setup_satellite.sh",
+#            "/home/setup_satellite.sh"
+#        ]
+#
+#        connection {
+#            type        = "ssh"
+#            user        = "root"
+#            private_key = file("${path.module}/id_rsa")
+#            host        = self.primary_ip_address
+#        }
+#    }
+#    
+#    # Copia el archivo attachHost-satellite-location.sh
+#    provisioner "file" {
+#        source      = "${path.module}/attachHost-satellite-location.sh"
+#        destination = "/home/attachHost-satellite-location.sh"
+#    }
+#
+#    # Ejecuta attachHost-satellite-location.sh en segundo plano
+#    provisioner "remote-exec" {
+#        inline = [
+#            "chmod +x /home/attachHost-satellite-location.sh",
+#            "sudo nohup bash /home/attachHost-satellite-location.sh &"
+#        ]
+#
+#        connection {
+#            type        = "ssh"
+#            user        = "root"
+#            private_key = file("${path.module}/id_rsa")
+#            host        = self.primary_ip_address
+#        }
+#    }
 #}
