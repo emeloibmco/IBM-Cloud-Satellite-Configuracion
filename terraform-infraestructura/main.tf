@@ -32,7 +32,7 @@ resource "ibm_network_vlan" "private_vlan" {
   name            = "private_vlan"
   datacenter      = var.datacenter
   type            = "PRIVATE"
-  router_hostname = "bcr01a.{var.datacenter}"
+  router_hostname = "bcr01a.${var.datacenter}"
 }
 ##############################################################################
 # Control plane
