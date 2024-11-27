@@ -73,7 +73,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
     local_disk           = false
     hostname = each.value.hostname
     public_vlan_id = ibm_network_vlan.public_vlan.id
-    private_vlan_id = data.ibm_network_vlan.private_vlan.id
+    private_vlan_id = ibm_network_vlan.private_vlan.id
 }
 
 ##############################################################################
