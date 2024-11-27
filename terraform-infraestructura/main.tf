@@ -40,7 +40,7 @@ resource "ibm_network_vlan" "private_vlan" {
 
 # Cargar la clave pública SSH en IBM Cloud
 resource "ibm_compute_ssh_key" "ssh_key" {
-  name       = "terraform-ssh-key"
+  label      = "terraform-ssh-key" 
   public_key = file("${path.module}/id_rsa.pub")
 }
 ##############################################################################
