@@ -164,7 +164,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
             "/home/setup_satellite.sh",
             "chmod +x /home/attachHost-satellite-location.sh",
             "nohup bash /home/attachHost-satellite-location.sh &",
-            ""
+            "echo 'Se corrieron todos los scripts' >> /home/end.log"
         ]
 
         connection {
