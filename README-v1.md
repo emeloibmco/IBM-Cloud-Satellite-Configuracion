@@ -114,8 +114,6 @@ Asigna los hosts correspondientes al control plane en las zonas correspondientes
 
 ## Satellite-config
 
-## Satellite Config
-
 Satellite Config es una herramienta de IBM Cloud que permite gestionar la implementación de recursos de Kubernetes en clústeres de Red Hat OpenShift, ya sea en ubicaciones de IBM Cloud Satellite o en IBM Cloud. Soporta configuraciones basadas en GitOps o mediante carga directa, facilitando el despliegue automatizado y consistente al integrarse con repositorios Git.
 
 ![image](https://github.com/user-attachments/assets/0e1d9dbb-d956-4530-baf0-e16a9882ebf6)
