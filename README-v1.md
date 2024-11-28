@@ -108,6 +108,8 @@ Asigna los hosts correspondientes al control plane en las zonas correspondientes
 
    ![image](https://github.com/user-attachments/assets/6a33fc08-16a0-4314-84a7-41083b0282f6)
 
+   **Nota:** para usar satellite config es necesario habilites el acceso de administracion de satellite al momento de desplegar el cluster.
+
 ---
 
 ## Satellite-config
