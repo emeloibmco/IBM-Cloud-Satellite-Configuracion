@@ -1,6 +1,9 @@
-# **IBM Cloud Satellite Configuración**
+# **IBM Cloud Satellite - Configuración**
 
-Esta guía proporciona un paso a paso para crear una ubicación de IBM Cloud Satellite, desplegar un clúster de OpenShift y configurar el almacenamiento asociado a dicho clúster.
+Esta guía ofrece un paso a paso para crear una ubicación de IBM Cloud Satellite, desplegar un clúster de OpenShift y configurar Satellite Config.
+
+**Nota:** Esta guía está diseñada para un despliegue rápido e intuitivo de un clúster y una aplicación, sin requerir conocimientos técnicos profundos. Para un entendimiento más detallado de la solución IBM Cloud Satellite y su gestión, consulta el otro archivo `README.md`.
+
 
 ## **Contenido**
 
@@ -12,7 +15,8 @@ Esta guía proporciona un paso a paso para crear una ubicación de IBM Cloud Sat
    3. [Ejecución del plan](#ejecución-del-plan)
 4. [Asignación de hosts al control plane](#asignación-de-hosts-al-control-plane)
 5. [Instalación de OpenShift](#instalación-de-openshift)
-6. [Eliminación](#eliminación)
+6. [Satellite config](#Satellite-config)
+7. [Eliminación](#eliminación)
 
 ---
 
@@ -103,6 +107,32 @@ Asigna los hosts correspondientes al control plane en las zonas correspondientes
 2. Escoge la ubicación creada previamente, el grupo de recursos con los permisos necesarios y define las características de los hosts existentes en la ubicación.
 
    ![image](https://github.com/user-attachments/assets/6a33fc08-16a0-4314-84a7-41083b0282f6)
+
+---
+
+## Satellite-config
+
+## Satellite Config
+
+Satellite Config es una herramienta de IBM Cloud que permite gestionar la implementación de recursos de Kubernetes en clústeres de Red Hat OpenShift, ya sea en ubicaciones de IBM Cloud Satellite o en IBM Cloud. Soporta configuraciones basadas en GitOps o mediante carga directa, facilitando el despliegue automatizado y consistente al integrarse con repositorios Git.
+
+![image](https://github.com/user-attachments/assets/0e1d9dbb-d956-4530-baf0-e16a9882ebf6)
+
+Al crear una configuración, utiliza la opción de GitOps y configura GitHub como proveedor.
+
+![image](https://github.com/user-attachments/assets/6879dd26-8b10-4d4d-85b7-efaf95e6568f)
+
+![image](https://github.com/user-attachments/assets/82f49391-d0ff-4b85-9c50-2018982f44ca)
+
+Aplica la siguiente configuración para añadir el ejemplo contenido en este repositorio.
+
+![image](https://github.com/user-attachments/assets/0833053f-fb7c-43f3-82e9-b83bac357ca7)
+
+Antes de proceder, crea un grupo de clústeres; en este, debes añadir las ubicaciones sobre las cuales se desea probar el Satellite Config.
+
+![image](https://github.com/user-attachments/assets/fafcf24b-672c-450b-bb32-6d272f8b0a02)
+
+Para verificar la correcta implementación del Satellite Config, accede a la consola de OpenShift del location donde se implementará y revisa el namespace/proyecto `razeedeploy`. En este, deberás observar un *Deployment*, un *Service* y un *Route*.
 
 ---
 
