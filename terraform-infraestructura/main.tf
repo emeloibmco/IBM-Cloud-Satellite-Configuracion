@@ -97,7 +97,7 @@ resource "ibm_compute_vm_instance" "control_plane" {
             "chmod +x /home/setup_satellite.sh",
             "/home/setup_satellite.sh",
             "chmod +x /home/attachHost-satellite-location.sh",
-            "sleep 30",
+            "sleep 60",
             "nohup bash /home/attachHost-satellite-location.sh",
             "echo 'Se corrieron todos los scripts' >> /home/end.log"
         ]
@@ -164,8 +164,8 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
             "chmod +x /home/setup_satellite.sh",
             "/home/setup_satellite.sh",
             "chmod +x /home/attachHost-satellite-location.sh",
-            "sleep 50",
-            "bash /home/attachHost-satellite-location.sh &",
+            "sleep 60",
+            "nohup bash /home/attachHost-satellite-location.sh",
             "echo 'Se corrieron todos los scripts' >> /home/end.log"
         ]
 

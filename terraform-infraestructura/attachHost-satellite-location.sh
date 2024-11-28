@@ -1,6 +1,3 @@
-#!/bin/bash
-echo "Iniciando el script attachHost-satellite-location.sh" >> /home/attachHost-debug.log
-
 #!/usr/bin/env bash
 cat << 'HERE' >>/usr/local/bin/ibm-host-attach.sh
 #!/usr/bin/env bash
@@ -12,10 +9,10 @@ if [[ -f "$HOST_ASSIGN_FLAG" ]]; then
 	exit 0
 fi
 set +x
-HOST_QUEUE_TOKEN="2301d858e1269e91c9363e10dbbb103505503b56ec7e3a3acade39ec97d7e97f5e5c2971ed06b95ddb729d7e61bea3a2e7fe2f1bed5aeaf078a57a9dce0860f6fe7c5b119ffc6e147ee667fe84686a36f2f84537d7326c8f7e0f2058c287aa41cfdefcaec0834f2cd9bcf8aae3ec451ebc11b5e98c0e72a3e475d43cb12d3fcd96d84642a3399c1e4da1b411c317e29d645a83a5607d5b3b6026b8305e5c43b9f849d75ad43b3e2c66bf0d67ab6175d49a3bd036d19c7f5d69c046988ce9eee6fc41cc71c0a676cdca6cf466a3fbb3e04f2cf3ad8706d2a68636c5144e99c97f8280aa2459107dbcc7c4480d0a327d9227ceb6a6a6da97ee310713bc850f0206"
+HOST_QUEUE_TOKEN="601470e1bb743eb3d1982c517ff8e0251f9b99d8b596cb06a228cbb94e8b10a0d8b57955ecabfd6563f7a4a367becda1b61d939ea2c3ee7001c2fdefd4e0fad5d0e9db7ff001f5888cd0b90005344aaa1dfb7ae8e2a5adeb8a173b868d690904f4078548673953aabeeb337b4dd428bbce51c523282e3523ddfa6721ae6ce55e06d16df614506e6274eb6395846c5e0b7f3c62687a8f67e685a9972140d2053d71c3ff2f8855f42df5ca3d4b581464a33047581024f4c83957090da0f6fbfca0526a4c3820b4072cdf47d219cddf360abe776dcc675f80c0f8af9a5ae18faf99b4c18e1089a4f9147c2a93608fb61d9d9fdb90f9e857d4f66c078280ace73377"
 set -x
 ACCOUNT_ID="736c7cd58317415b8d28a03e0e81eaf5"
-CONTROLLER_ID="ct3pbk4w0n40spfi651g"
+CONTROLLER_ID="ct3s8e7w0o5afpni6520"
 SELECTOR_LABELS='{}'
 API_URL="https://origin.us-east.containers.cloud.ibm.com/"
 REGION="us-east"
@@ -311,5 +308,3 @@ chmod 0644 /etc/systemd/system/ibm-host-attach.service
 systemctl daemon-reload
 systemctl enable ibm-host-attach.service
 systemctl start ibm-host-attach.service
-
-echo "Fin del script attachHost-satellite-location.sh" >> /home/attachHost-debug.log
