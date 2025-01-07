@@ -34,15 +34,7 @@ variable control_plane {
         {
             hostname = "controlplane01.satellite-demo.cloud"
             disks    = [25,100]
-        },
-        {
-            hostname = "controlplane02.satellite-demo.cloud"
-            disks    = [25,100]
-        },
-        {
-            hostname = "controlplane03.satellite-demo.cloud"
-            disks    = [25,100]
-        },
+        }
     ]
 }
 
@@ -53,18 +45,6 @@ variable worker_nodes {
             disks = list(number)
         }))
     default     = [
-        {
-            hostname     = "worker01.satellite-demo.cloud"
-            disks = [25,100]
-        },
-        {
-            hostname     = "worker02.satellite-demo.cloud"
-            disks = [25,100]
-        },
-        {
-            hostname     = "worker03.satellite-demo.cloud"
-            disks = [25,100]
-        }
     ]
 }
 
