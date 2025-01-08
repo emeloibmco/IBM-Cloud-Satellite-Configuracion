@@ -40,7 +40,7 @@ variable control_plane {
             disks    = [25,100]
         },
         {
-            hostname = "controlplane02.satellite-demo.cloud"
+            hostname = "controlplane03.satellite-demo.cloud"
             disks    = [25,100]
         }
     ]
