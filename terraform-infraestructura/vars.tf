@@ -42,6 +42,18 @@ variable control_plane {
         {
             hostname = "controlplane03.satellite-demo.cloud"
             disks    = [25,100]
+        },
+        {
+            hostname = "controlplane04.satellite-demo.cloud"
+            disks    = [25,100]
+        },
+        {
+            hostname = "controlplane05.satellite-demo.cloud"
+            disks    = [25,100]
+        },
+        {
+            hostname = "controlplane06.satellite-demo.cloud"
+            disks    = [25,100]
         }
     ]
 }
