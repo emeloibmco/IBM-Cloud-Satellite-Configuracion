@@ -42,18 +42,6 @@ variable control_plane {
         {
             hostname = "controlplane03.satellite-demo.cloud"
             disks    = [25,100]
-        },
-        {
-            hostname = "controlplane04.satellite-demo.cloud"
-            disks    = [25,100]
-        },
-        {
-            hostname = "controlplane05.satellite-demo.cloud"
-            disks    = [25,100]
-        },
-        {
-            hostname = "controlplane06.satellite-demo.cloud"
-            disks    = [25,100]
         }
     ]
 }
@@ -88,15 +76,15 @@ variable ODF {
         }))
     default     = [
         {
-            hostname     = "worker01.satellite-demo.cloud"
+            hostname     = "ODF01.satellite-demo.cloud"
             disks = [25,100,100,300]
         },
         {
-            hostname     = "worker02.satellite-demo.cloud"
+            hostname     = "ODF02.satellite-demo.cloud"
             disks = [25,100,100,300]
         },
         {
-            hostname     = "worker03.satellite-demo.cloud "
+            hostname     = "ODF03.satellite-demo.cloud "
             disks = [25,100,100,300]
         }
     ]
