@@ -187,7 +187,7 @@ resource "ibm_compute_vm_instance" "control_plane" {
 resource "ibm_compute_vm_instance" "worker_nodes" {
   for_each             = { for vm in var.worker_nodes : vm.hostname => vm }
   domain               = "clusteropenshift.com"
-  os_reference_code    = "fedora-coreos-stable-amd64"  # Usando la imagen de Fedora CoreOS
+  os_reference_code    = "COREOS_OSTREE_64"  # Usando la imagen de Fedora CoreOS
   datacenter           = var.datacenter
   hourly_billing       = true
   private_network_only = false
