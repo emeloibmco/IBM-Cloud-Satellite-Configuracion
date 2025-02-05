@@ -129,8 +129,10 @@ resource "ibm_compute_vm_instance" "control_plane" {
     hostname = each.value.hostname
     public_vlan_id = ibm_network_vlan.public_vlan.id
     private_vlan_id = ibm_network_vlan.private_vlan.id
-    public_security_group_ids   = [ibm_security_group.sg1.id]
-    private_security_group_ids  = [ibm_security_group.sg1.id]
+    #public_security_group_ids   = [ibm_security_group.sg1.id]
+    #private_security_group_ids  = [ibm_security_group.sg1.id]
+    public_security_group_ids=data.ibm_security_group.sg1 
+    private_security_group_ids=data.ibm_security_group.sg1
     ssh_key_ids          = [ibm_compute_ssh_key.ssh_key.id]
 
     # Copia el archivo setup_satellite.sh
@@ -196,8 +198,10 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
   hostname             = each.value.hostname
   public_vlan_id       = ibm_network_vlan.public_vlan.id
   private_vlan_id      = ibm_network_vlan.private_vlan.id    
-  public_security_group_ids   = [ibm_security_group.sg1.id]
-  private_security_group_ids  = [ibm_security_group.sg1.id]
+  #public_security_group_ids   = [ibm_security_group.sg1.id]
+  #private_security_group_ids  = [ibm_security_group.sg1.id]
+  public_security_group_ids=data.ibm_security_group.sg1 
+  private_security_group_ids=data.ibm_security_group.sg1
 
   ssh_key_ids          = [ibm_compute_ssh_key.ssh_key.id]
 
