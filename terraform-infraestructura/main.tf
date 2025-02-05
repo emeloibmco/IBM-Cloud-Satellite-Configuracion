@@ -38,62 +38,68 @@ resource "ibm_network_vlan" "private_vlan" {
 # security_group
 ##############################################################################
 
-resource "ibm_security_group" "sg1" {
-    name = "sg1"
-    description = "allow_all_outbound"
+#Security group preestablecido
+data "ibm_security_group" "sg1" {
+  name = "allow_all"
 }
 
-# Allow all inbound 
-resource "ibm_security_group_rule" "sg1_inbound_tcp" {
-  security_group_id = ibm_security_group.sg1.id
-  direction = "ingress"
-  ether_type = "IPv4"
-  protocol = "tcp"
-  port_range_min = 0
-  port_range_max = 65535
-}
-
-resource "ibm_security_group_rule" "sg1_inbound_udp" {
-  security_group_id = ibm_security_group.sg1.id
-  direction = "ingress"
-  ether_type = "IPv4"
-  protocol = "udp"
-  port_range_min = 0
-  port_range_max = 65535
-}
-
-resource "ibm_security_group_rule" "sg1_inbound_icmp" {
-  security_group_id = ibm_security_group.sg1.id
-  direction = "ingress"
-  ether_type = "IPv4"
-  protocol = "icmp"
-}
-
-# Allow all outbound 
-resource "ibm_security_group_rule" "sg1_outbound_tcp" {
-  security_group_id = ibm_security_group.sg1.id
-  direction = "egress"
-  ether_type = "IPv4"
-  protocol = "tcp"
-  port_range_min = 0
-  port_range_max = 65535
-}
-
-resource "ibm_security_group_rule" "sg1_outbound_udp" {
-  security_group_id = ibm_security_group.sg1.id
-  direction = "egress"
-  ether_type = "IPv4"
-  protocol = "udp"
-  port_range_min = 0
-  port_range_max = 65535
-}
-
-resource "ibm_security_group_rule" "sg1_outbound_icmp" {
-  security_group_id = ibm_security_group.sg1.id
-  direction = "egress"
-  ether_type = "IPv4"
-  protocol = "icmp"
-}
+# Usar en caso de tener permisos sobre securtiy groups en classic infraestructure
+#resource "ibm_security_group" "sg1" {
+#    name = "sg1"
+#    description = "allow_all_outbound"
+#}
+#
+## Allow all inbound 
+#resource "ibm_security_group_rule" "sg1_inbound_tcp" {
+#  security_group_id = ibm_security_group.sg1.id
+#  direction = "ingress"
+#  ether_type = "IPv4"
+#  protocol = "tcp"
+#  port_range_min = 0
+#  port_range_max = 65535
+#}
+#
+#resource "ibm_security_group_rule" "sg1_inbound_udp" {
+#  security_group_id = ibm_security_group.sg1.id
+#  direction = "ingress"
+#  ether_type = "IPv4"
+#  protocol = "udp"
+#  port_range_min = 0
+#  port_range_max = 65535
+#}
+#
+#resource "ibm_security_group_rule" "sg1_inbound_icmp" {
+#  security_group_id = ibm_security_group.sg1.id
+#  direction = "ingress"
+#  ether_type = "IPv4"
+#  protocol = "icmp"
+#}
+#
+## Allow all outbound 
+#resource "ibm_security_group_rule" "sg1_outbound_tcp" {
+#  security_group_id = ibm_security_group.sg1.id
+#  direction = "egress"
+#  ether_type = "IPv4"
+#  protocol = "tcp"
+#  port_range_min = 0
+#  port_range_max = 65535
+#}
+#
+#resource "ibm_security_group_rule" "sg1_outbound_udp" {
+#  security_group_id = ibm_security_group.sg1.id
+#  direction = "egress"
+#  ether_type = "IPv4"
+#  protocol = "udp"
+#  port_range_min = 0
+#  port_range_max = 65535
+#}
+#
+#resource "ibm_security_group_rule" "sg1_outbound_icmp" {
+#  security_group_id = ibm_security_group.sg1.id
+#  direction = "egress"
+#  ether_type = "IPv4"
+#  protocol = "icmp"
+#}
 ##############################################################################
 # Gestión de Claves SSH
 ##############################################################################
