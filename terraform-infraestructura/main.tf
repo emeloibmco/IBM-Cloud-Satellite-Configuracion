@@ -144,7 +144,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
             host        = self.ipv4_address
         }
     }
-    user_data = "${path.module}/setup_satellite.sh"
+    
     # Copia el archivo attachHost-satellite-location.sh
     provisioner "file" {
         source      = "${path.module}/attachHost-satellite-location.sh"
