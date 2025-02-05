@@ -163,8 +163,8 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 
   # Copia el archivo Ignition
   provisioner "file" {
-    source      = "${path.module}/worker_ignition.json"
-    destination = "/home/core/worker_ignition.json"
+    source      = "${path.module}/attachHost-satellite-location.ign"
+    destination = "/home/core/attachHost-satellite-location.ign"
 
     connection {
       type        = "ssh"
@@ -177,7 +177,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
   # Configuración del archivo Ignition (si es necesario para la configuración inicial)
   provisioner "remote-exec" {
     inline = [
-      "sudo coreos-install --from-file /home/core/worker_ignition.json"
+      "sudo coreos-install --from-file /home/core/attachHost-satellite-location.ign"
     ]
 
     connection {
