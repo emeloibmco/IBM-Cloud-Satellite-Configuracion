@@ -131,8 +131,8 @@ resource "ibm_compute_vm_instance" "control_plane" {
     private_vlan_id = ibm_network_vlan.private_vlan.id
     #public_security_group_ids   = [ibm_security_group.sg1.id]
     #private_security_group_ids  = [ibm_security_group.sg1.id]
-    public_security_group_ids=[data.ibm_security_group.sg1.id]
-    private_security_group_ids=[data.ibm_security_group.sg1.id]
+    #public_security_group_ids=[data.ibm_security_group.sg1.id]
+    #private_security_group_ids=[data.ibm_security_group.sg1.id]
     ssh_key_ids          = [ibm_compute_ssh_key.ssh_key.id]
 
     # Copia el archivo setup_satellite.sh
@@ -186,26 +186,25 @@ resource "ibm_compute_vm_instance" "control_plane" {
 
 resource "ibm_compute_vm_instance" "worker_nodes" {
   for_each             = { for vm in var.worker_nodes : vm.hostname => vm }
-  domain               = "clusteropenshift.com"
-  os_reference_code    = "REDHAT_8_64"
-  datacenter           = var.datacenter
-  hourly_billing       = true
-  private_network_only = false
-  cores                = 4
-  memory               = 16384
-  disks                = each.value.disks
-  local_disk           = false
-  hostname             = each.value.hostname
-  public_vlan_id       = ibm_network_vlan.public_vlan.id
-  private_vlan_id      = ibm_network_vlan.private_vlan.id    
-  #public_security_group_ids   = [ibm_security_group.sg1.id]
-  #private_security_group_ids  = [ibm_security_group.sg1.id]
-  public_security_group_ids=[data.ibm_security_group.sg1.id]
-  private_security_group_ids=[data.ibm_security_group.sg1.id]
+      domain               = "clusteropenshift.com"
+    os_reference_code    = "REDHAT_8_64"
+    datacenter           = var.datacenter
+    hourly_billing       = true
+    private_network_only = false
+    network_speed        = 10
+    cores                = 4
+    memory               = 16384
+    disks                = each.value.disks
+    local_disk           = false
+    hostname = each.value.hostname
+    public_vlan_id = ibm_network_vlan.public_vlan.id
+    private_vlan_id = ibm_network_vlan.private_vlan.id
+    #public_security_group_ids   = [ibm_security_group.sg1.id]
+    #private_security_group_ids  = [ibm_security_group.sg1.id]
+    #public_security_group_ids=[data.ibm_security_group.sg1.id]
+    #private_security_group_ids=[data.ibm_security_group.sg1.id]
+    ssh_key_ids          = [ibm_compute_ssh_key.ssh_key.id]
 
-  ssh_key_ids          = [ibm_compute_ssh_key.ssh_key.id]
-
- 
     # Copia el archivo setup_satellite.sh
     provisioner "file" {
         source      = "${path.module}/setup_satellite.sh"
@@ -250,6 +249,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
         }
     }
 }
+
 
 ##############################################################################
 # ODF
