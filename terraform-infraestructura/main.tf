@@ -164,10 +164,10 @@ resource "ibm_compute_vm_instance" "control_plane" {
     provisioner "remote-exec" {
         inline = [
             "chmod +x /home/setup_satellite.sh",
-            "/home/setup_satellite.sh",
+            "sudo /home/setup_satellite.sh",
             "chmod +x /home/attachHost-satellite-location.sh",
-            "sleep 60",
-            "nohup bash /home/attachHost-satellite-location.sh",
+            "sleep 90",
+            "sudo nohup bash /home/attachHost-satellite-location.sh",
             "echo 'Se corrieron todos los scripts' >> /home/end.log"
         ]
 
@@ -187,8 +187,7 @@ resource "ibm_compute_vm_instance" "control_plane" {
 resource "ibm_compute_vm_instance" "worker_nodes" {
   for_each             = { for vm in var.worker_nodes : vm.hostname => vm }
   domain               = "clusteropenshift.com"
-  #os_reference_code    = "COREOS_OSTREE_64"  # Usando la imagen de Fedora CoreOS
-  image_id             = 1648545
+  os_reference_code    = "REDHAT_8_64"
   datacenter           = var.datacenter
   hourly_billing       = true
   private_network_only = false
@@ -206,32 +205,50 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 
   ssh_key_ids          = [ibm_compute_ssh_key.ssh_key.id]
 
-  # Copia el archivo Ignition
-  provisioner "file" {
-    source      = "${path.module}/attachHost-satellite-location.ign"
-    destination = "/home/core/attachHost-satellite-location.ign"
+ 
+    # Copia el archivo setup_satellite.sh
+    provisioner "file" {
+        source      = "${path.module}/setup_satellite.sh"
+        destination = "/home/setup_satellite.sh"
 
-    connection {
-      type        = "ssh"
-      user        = "root"  # Usuario predeterminado en Fedora CoreOS
-      private_key = file("${path.module}/id_rsa")
-      host        = self.ipv4_address
+        connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.ipv4_address
+        }
     }
-  }
 
-  # Configuración del archivo Ignition (si es necesario para la configuración inicial)
-  provisioner "remote-exec" {
-    inline = [
-      "sudo coreos-install --from-file /home/core/attachHost-satellite-location.ign"
-    ]
+    # Copia el archivo attachHost-satellite-location.sh
+    provisioner "file" {
+        source      = "${path.module}/attachHost-satellite-location.sh"
+        destination = "/home/attachHost-satellite-location.sh"
 
-    connection {
-      type        = "ssh"
-      user        = "root"
-      private_key = file("${path.module}/id_rsa")
-      host        = self.ipv4_address
+          connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.ipv4_address
+        }
     }
-  }
+
+    provisioner "remote-exec" {
+        inline = [
+            "chmod +x /home/setup_satellite.sh",
+            "sudo /home/setup_satellite.sh",
+            "chmod +x /home/attachHost-satellite-location.sh",
+            "sleep 90",
+            "sudo nohup bash /home/attachHost-satellite-location.sh",
+            "echo 'Se corrieron todos los scripts' >> /home/end.log"
+        ]
+
+        connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = file("${path.module}/id_rsa")
+            host        = self.ipv4_address
+        }
+    }
 }
 
 ##############################################################################
