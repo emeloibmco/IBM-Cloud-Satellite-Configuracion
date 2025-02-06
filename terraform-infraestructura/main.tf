@@ -213,7 +213,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 
     connection {
       type        = "ssh"
-      user        = "core"  # Usuario predeterminado en Fedora CoreOS
+      user        = "root"  # Usuario predeterminado en Fedora CoreOS
       private_key = file("${path.module}/id_rsa")
       host        = self.ipv4_address
     }
@@ -227,7 +227,7 @@ resource "ibm_compute_vm_instance" "worker_nodes" {
 
     connection {
       type        = "ssh"
-      user        = "core"
+      user        = "root"
       private_key = file("${path.module}/id_rsa")
       host        = self.ipv4_address
     }
