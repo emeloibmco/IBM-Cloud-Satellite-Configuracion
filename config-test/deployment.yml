@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: python-hello-world
-  namespace: razeedeploy
+  namespace: test
   labels:
     app: python-hello-world
 spec:
