@@ -6,7 +6,7 @@ metadata:
   labels:
     app: python-hello-world
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: python-hello-world
