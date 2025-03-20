@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        app: python-hello-world-1
+        app: python-hello-world
     spec:
       containers:
         - name: python-hello-world
