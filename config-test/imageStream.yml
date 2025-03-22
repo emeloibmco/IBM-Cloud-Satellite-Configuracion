@@ -1,0 +1,15 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: python-hello-world
+  namespace: test
+spec:
+  tags:
+    - name: latest
+      annotations:
+        description: "Tag apuntando a la última versión de la imagen"
+      from:
+        kind: DockerImage
+        name: docker.io/diegorom27/python-hello-world:latest
+      importPolicy:
+        scheduled: true
