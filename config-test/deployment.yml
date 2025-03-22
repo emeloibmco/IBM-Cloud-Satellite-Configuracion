@@ -18,6 +18,12 @@ spec:
       containers:
         - name: python-hello-world
           image: docker.io/diegorom27/python-hello-world:latest
+          env:
+            - name: IMAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: python-hello-world-config
+                  key: image
           ports:
             - name: http
               containerPort: 5000
