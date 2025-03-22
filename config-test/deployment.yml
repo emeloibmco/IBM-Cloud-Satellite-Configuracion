@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: python-hello-world
-          image: docker.io/diegorom27/python-hello-world:latest
+          image: "$(IMAGE)"
           env:
             - name: IMAGE
               valueFrom:
