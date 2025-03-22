@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: python-hello-world
-          image: "$(IMAGE)"
+          image: ${IMAGE}
           env:
             - name: IMAGE
               valueFrom:
