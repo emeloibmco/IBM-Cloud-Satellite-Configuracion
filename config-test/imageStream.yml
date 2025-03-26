@@ -10,6 +10,6 @@ spec:
         description: "Tag apuntando a la última versión de la imagen"
       from:
         kind: DockerImage
-        name: docker.io/diegorom27/maps-api:v1
+        name: docker.io/diegorom27/python-hello-world:latest
       importPolicy:
         scheduled: true
